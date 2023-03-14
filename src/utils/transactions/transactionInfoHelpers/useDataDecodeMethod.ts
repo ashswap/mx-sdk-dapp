@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { DecodeMethodEnum } from 'types';
 
 export const useDataDecodeMethod = () => {
-  const hash = window?.location.hash;
-  const pathname = window?.location.pathname;
+  const { hash, pathname } = window.location;
   const hashDecodeMethod = hash.replace('#', '');
   const initialDecodeMethod =
     hashDecodeMethod &&
@@ -14,7 +13,7 @@ export const useDataDecodeMethod = () => {
 
   useEffect(() => {
     if (decodeMethod && decodeMethod !== DecodeMethodEnum.raw) {
-      window?.history.replaceState(
+      window.history.replaceState(
         {},
         document?.title,
         `${pathname}#${decodeMethod}`

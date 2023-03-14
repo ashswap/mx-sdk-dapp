@@ -4,9 +4,7 @@ export const parseNavigationParams = (preserveParams: string[]) => {
   let params: Record<string, string> = {};
 
   if (window?.location?.search) {
-    const urlSearchParams = window
-      ? new URLSearchParams(window.location.search)
-      : [];
+    const urlSearchParams = new URLSearchParams(window.location.search);
     params = Object.fromEntries(urlSearchParams);
   }
 

@@ -108,9 +108,7 @@ export const useSignTransactions = () => {
     callbackRoute = ''
   ) => {
     const urlParams = { [WALLET_SIGN_SESSION]: sessionId };
-    const callbackUrl = window?.location
-      ? `${window.location.origin}${callbackRoute}`
-      : `${callbackRoute}`;
+    const callbackUrl = `${window.location.origin}${callbackRoute}`;
     const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
 
     provider.signTransactions(transactions, {
@@ -130,8 +128,8 @@ export const useSignTransactions = () => {
       customTransactionInformation
     } = transactionsToSign;
     const { redirectAfterSign } = customTransactionInformation;
-    const redirectRoute = callbackRoute || window?.location.pathname;
-    const isCurrentRoute = window?.location.pathname.includes(redirectRoute);
+    const redirectRoute = callbackRoute || window.location.pathname;
+    const isCurrentRoute = window.location.pathname.includes(redirectRoute);
     const shouldRedirectAfterSign = redirectAfterSign && !isCurrentRoute;
 
     try {
@@ -219,7 +217,7 @@ export const useSignTransactions = () => {
      * the callback will go to undefined,
      * we save the most recent one for a valid transaction
      */
-    savedCallback.current = callbackRoute || window?.location.pathname;
+    savedCallback.current = callbackRoute || window.location.pathname;
 
     try {
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;

@@ -66,9 +66,7 @@ export const useWebWalletLogin = ({
         loginService.setLoginToken(token);
       }
 
-      const targetUrl = window?.location
-        ? `${window.location.origin}${callbackRoute}`
-        : `${callbackRoute}`;
+      const targetUrl = `${window.location.origin}${callbackRoute}`;
       const params = new URLSearchParams(document.location.search);
 
       // skip login when an address param is prefilled in URL

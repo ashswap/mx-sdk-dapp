@@ -54,9 +54,7 @@ export const useOperaLogin = ({
       }
 
       const callbackUrl: string = encodeURIComponent(
-        `${window?.location.origin}${
-          callbackRoute ?? window?.location.pathname
-        }`
+        `${window.location.origin}${callbackRoute ?? window.location.pathname}`
       );
 
       if (hasNativeAuth && !token) {
