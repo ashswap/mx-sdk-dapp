@@ -8,6 +8,10 @@ import {
 
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
 import {
+  removeAllSignedTransactions,
+  removeAllTransactionsToSign
+} from 'services';
+import {
   ActiveLedgerTransactionType,
   DeviceSignedTransactions,
   ScamInfoType
@@ -132,6 +136,8 @@ export function useSignMultipleTransactions({
     setCurrentStep(0);
     setSignedTransactions(undefined);
     setWaitingForDevice(false);
+    removeAllSignedTransactions();
+    removeAllTransactionsToSign();
   }
 
   async function sign() {
@@ -152,6 +158,7 @@ export function useSignMultipleTransactions({
         : null;
 
       reset();
+
       return onTransactionsSignError(errorMessage ?? message);
     }
 
@@ -244,9 +251,20 @@ export function useSignMultipleTransactions({
   function onPrev() {
     setCurrentStep((current) => {
       const nextStep = current - 1;
+
       if (nextStep < 0) {
         return current;
       }
+
+      const shouldResetTransactionsAndState =
+        waitingForDevice || nextStep === 0;
+
+      if (shouldResetTransactionsAndState) {
+        // Reset the sign state if we are in the first step
+        // or if the device is loading and the user presses back button
+        reset();
+      }
+
       return nextStep;
     });
   }
